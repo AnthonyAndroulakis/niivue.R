@@ -1,0 +1,5 @@
+dependencies:
+  - name: niivue
+    version: 0.32.0
+    src: "htmlwidgets/lib"
+    script: niivue.umd.js
