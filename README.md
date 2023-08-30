@@ -1,38 +1,44 @@
-# niivue.R
-A WebGL2-based NIFTI volume viewer in R
+# Using NiiVue in R Shiny
+[NiiVue](https://github.com/niivue/niivue) is an open-source JavaScript library for WebGL2-based medical image viewing. This R package allows you to use NiiVue from R Shiny.
 
-# Installation
-```
-git clone https://github.com/anthonyandroulakis/niivue.R
-```
-open R Studio. Then, in R Studio:
-```R
-setwd("/path/to/niivue.R")
-library(niivue)
-library(dplyr) #in order to be able to use %>%
-```
+# Examples
+### Tractography (TCK, TRK, TRX, VTK)
+Demo for [NiiVue's Tractography](https://niivue.github.io/niivue/features/tracts.html)
+![](images/example1.png)
 
-# Usage
-```R
-niivue() %>%
-  onRender("function(el) { console.log(el); }")
-```
+### Time Series Demo
+Partial demo for [NiiVue's Time Series](https://niivue.github.io/niivue/features/timeseries.html) (toggle thumbnail doesn't work, but the other features do)
+![](images/example2.png)
 
-# Development
-Currently, messaging between R and js does not work. If this messaging can be implemented (as has been implemented in other libraries that use both js and R, for example, see plotly.R), then something like this could be done:
-```R
-niivue() %>%
-  addVolume("https://niivue.github.io/niivue/images/mni152.nii.gz")
+# Quickstart
+1. Install the devtools library
 ```
-2 helpful resources are:
-- https://shiny.rstudio.com/articles/js-send-message.html
-- https://github.com/FrissAnalytics/shinyJsTutorials/blob/master/tutorials/materials3/C3/R/C3.R
+install.packages('devtools')
+```
+2. Install this niivue library
+```
+devtools::install_github('AnthonyAndroulakis/niivue.R')
+```
+3. Use it (for more examples, see the examples folder)
+```R
+suppressWarnings(library(niivue))
+library(shiny)
 
-# Rebuilding
-Open R Studio, and run these:
-```R
-setwd("path/to/niivue.R")
-setwd("./niivue")
-devtools::install()
+ui <- fluidPage(
+  fluidRow(
+    tags$div(style = "width: 100%; height: 600px;", NiivueWidget$new()$plot)
+  )
+)
+
+server <- function(input, output, session) {
+  volumeList <- list(
+    list(url = "https://niivue.github.io/niivue/images/mni152.nii.gz",
+         colormap = "gray")
+  )
+
+  nv <- NiivueWidget$new()
+  nv$loadVolumes(volumeList)
+}
+
+shinyApp(ui, server)
 ```
-It might help to close and reopen R studio. Then, reinstall the niivue library and use the niivue library.

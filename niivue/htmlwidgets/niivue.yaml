@@ -1,0 +1,9 @@
+dependencies:
+  - name: constants
+    version: 1.0
+    src: htmlwidgets
+    script: constants.js
+  - name: niivue
+    version: 1.0
+    src: htmlwidgets
+    script: niivue.umd.js
