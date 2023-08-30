@@ -5,10 +5,12 @@
 ### Tractography (TCK, TRK, TRX, VTK)
 Demo for [NiiVue's Tractography](https://niivue.github.io/niivue/features/tracts.html)
 ![](images/example1.png)
+[[code]](examples/tracts.R)
 
 ### Time Series Demo
 Partial demo for [NiiVue's Time Series](https://niivue.github.io/niivue/features/timeseries.html) (toggle thumbnail doesn't work, but the other features do)
 ![](images/example2.png)
+[[code]](examples/timeseries.R)
 
 # Quickstart
 1. Install the devtools library
