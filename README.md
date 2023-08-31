@@ -44,3 +44,9 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
+
+# Limitations
+- any large data arrays (ex: nv.volumes[0].img) are not sent back to R
+- nv$thumbnailVisible(TRUE) doesn't work as intended
+- only the onLocationChange niivue event handler is implemented
+- no documentation
