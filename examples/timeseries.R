@@ -51,24 +51,27 @@ server <- function(input, output, session) {
 
   currentVol <- 0
   
-  # Add reactive value to store animation status
   animationStatus <- reactiveVal(FALSE)
 
+  # normalize graph
   observeEvent(input$normalizeCheckbox, {
     nv$graph$normalizeValues <- input$normalizeCheckbox
   }, ignoreInit = TRUE)
 
+  # goto previous volume
   observeEvent(input$prevVolume, {
     currentVol <<- max(currentVol - 1, 0)
     nv$setFrame4D(nv$volumes[[1]]$id, currentVol)
   }, ignoreInit = TRUE)
 
+  # goto next volume
   observeEvent(input$nextVolume, {
     currentVol <<- currentVol + 1
     currentVol <<- min(currentVol, nv$getFrame4D(nv$volumes[[1]]$id) - 1)
     nv$setFrame4D(nv$volumes[[1]]$id, currentVol)
   }, ignoreInit = TRUE)
   
+  # loop volumes
   observeEvent(input$animateButton, {
     if (animationStatus()) {
       animationStatus(FALSE)
@@ -89,6 +92,7 @@ server <- function(input, output, session) {
     }
   })
 
+  # save scene
   observeEvent(input$saveButton, {
     nv$saveScene()
   }, ignoreInit = TRUE)

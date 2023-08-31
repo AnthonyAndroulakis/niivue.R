@@ -44,27 +44,33 @@ server <- function(input, output, session) {
   nv$loadVolumes(volumeList)
   nv$loadMeshes(meshList)
 
+  # wait for nv$meshes to update
   observeEvent(input$meshes, {
     nv$setMeshProperty(nv$meshes[[1]]$id, "colormap", "blue")
     nv$setClipPlane(c(-0.1, 270, 0))
   }, once = TRUE)
 
+  # fiber length
   observeEvent(input$fiberLengthSlider, {
     nv$setMeshProperty(nv$meshes[[1]]$id, "fiberLength", input$fiberLengthSlider)
   }, ignoreInit = TRUE)
 
+  # fiber dither
   observeEvent(input$fiberDitherSlider, {
     nv$setMeshProperty(nv$meshes[[1]]$id, "fiberDither", input$fiberDitherSlider * 0.1)
   }, ignoreInit = TRUE)
 
+  # fiber color
   observeEvent(input$fiberColor, {
     nv$setMeshProperty(nv$meshes[[1]]$id, "fiberColor", input$fiberColor)
   }, ignoreInit = TRUE)
 
+  # fiber decimation
   observeEvent(input$fiberDecimation, {
     nv$setMeshProperty(nv$meshes[[1]]$id, "fiberDecimationStride", input$fiberDecimation)
   }, ignoreInit = TRUE)
 
+  # save scene
   observeEvent(input$saveButton, {
     nv$saveScene()
   }, ignoreInit = TRUE)
