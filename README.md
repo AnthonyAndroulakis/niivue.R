@@ -17,11 +17,16 @@ Partial demo for [NiiVue's Time Series](https://niivue.github.io/niivue/features
 ```
 install.packages('devtools')
 ```
-2. Install this niivue library
+2. Download this repo
 ```
-devtools::install_github('AnthonyAndroulakis/niivue.R')
+git clone https://github.com/AnthonyAndroulakis/niivue.R
 ```
-3. Use it (for more examples, see the examples folder)
+3. Install niivue R library
+```
+cd niivue.R/niivue
+devtools::install()
+```
+4. Use it (for more examples, see the examples folder)
 ```R
 suppressWarnings(library(niivue))
 library(shiny)
@@ -35,7 +40,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   volumeList <- list(
     list(url = "https://niivue.github.io/niivue/images/mni152.nii.gz",
-         colormap = "gray")
+         colormap = "gray", visible=TRUE, opacity=1)
   )
 
   nv <- NiivueWidget$new()
@@ -45,8 +50,13 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 ```
 
+# Docs
+- you need a shiny server to run niivue.R
+- usage mirrors that of the niivue library (camelcase)
+- nv$opts and nv$graph are reactiveValues variables
+
 # Limitations
 - any large data arrays (ex: nv.volumes[0].img) are not sent back to R
 - nv$thumbnailVisible(TRUE) doesn't work as intended
 - only the onLocationChange niivue event handler is implemented
-- no documentation
+- no extensive documentation (just refer to https://niivue.github.io/niivue/devdocs/index.html)
